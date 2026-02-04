@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Products Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Products Dashboard</h2>
+      <div>
+        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#createModal">Tạo Item</button>
+        <button id="exportCsv" class="btn btn-outline-secondary">Export CSV</button>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <input id="searchInput" class="form-control" placeholder="Tìm theo title..." />
+      </div>
+      <div class="col-md-6 text-end">
+        <label for="pageSize" class="form-label me-2">Hiển thị:</label>
+        <select id="pageSize" class="form-select d-inline-block w-auto">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="20">20</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle" id="productsTable">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Images</th>
+            <th>
+              Title
+              <button class="btn btn-sm btn-outline-secondary ms-2 sort-btn" data-key="title">Sắp xếp</button>
+            </th>
+            <th>
+              Price
+              <button class="btn btn-sm btn-outline-secondary ms-2 sort-btn" data-key="price">Sắp xếp</button>
+            </th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody id="productsTbody">
+          <tr><td colspan="5" class="text-center">Đang tải dữ liệu...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <nav>
+      <ul class="pagination" id="pagination"></ul>
+    </nav>
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Product Detail</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="detailForm">
+            <input type="hidden" id="detailId" />
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input id="detailTitle" class="form-control" readonly />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Price</label>
+              <input id="detailPrice" type="number" class="form-control" readonly />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea id="detailDescription" class="form-control" rows="3" readonly></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Category</label>
+              <select id="detailCategory" class="form-select" disabled></select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Images (one URL)</label>
+              <input id="detailImage" class="form-control" readonly />
+            </div>
+            <div id="detailImagesList" class="mb-3 d-flex gap-2 flex-wrap"></div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="editBtn" class="btn btn-primary">Edit</button>
+          <button id="saveBtn" class="btn btn-success d-none">Save</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Create Modal -->
+  <div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Tạo Item</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="createForm">
+            <div class="mb-3">
+              <label class="form-label">Title</label>
+              <input id="createTitle" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Price</label>
+              <input id="createPrice" type="number" class="form-control" required />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Description</label>
+              <textarea id="createDescription" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Category</label>
+              <select id="createCategory" class="form-select" required></select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Image URL</label>
+              <input id="createImage" class="form-control" required />
+            </div>
+            <div id="createError" class="text-danger small mb-2" role="alert" aria-live="polite"></div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="createSubmit" type="button" class="btn btn-success">Create</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+/* Custom styles */
+img.thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.table-hover tbody tr:hover {cursor: pointer}
+/* truncate description on tooltip if too long */
